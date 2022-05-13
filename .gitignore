@@ -1,0 +1,9 @@
+/.idea
+/.vscode
+/vendor
+*.log
+.env
+.env.local
+composer.lock
+public/.htaccess
+/wechatpay_723C6FF7EB85C3594B82F1F9EF7CFB6BBC792CB9.pem
