@@ -54,7 +54,7 @@ class GateWork extends BaseWork
                         StdLog::self()->error('on lan_target_connect fail: conn lose');
                     }else{
                         $worker->connections[$eventData['id']]->close();
-                        StdLog::self()->info('on lan_target_connect:'.var_export($eventData));
+                        StdLog::self()->info('on lan_target_connect:'.var_export($eventData,true));
                     }
                 }catch (\Exception $e){
                     StdLog::self()->error('on lan_target_connect error:'.$e->getMessage().$e->getTraceAsString());
@@ -64,7 +64,7 @@ class GateWork extends BaseWork
 
 
             Client::on('lan_target_connect',function($eventData){
-                StdLog::self()->info('on lan_target_connect:'.var_export($eventData));
+                StdLog::self()->info('on lan_target_connect:'.var_export($eventData,true));
             });
 
         };
@@ -78,7 +78,7 @@ class GateWork extends BaseWork
             ];
 
             Client::publish('user_gate_connect',$user_conn);
-            StdLog::self()->info('publish user_gate_connect:'.var_export($user_conn));
+            StdLog::self()->info('publish user_gate_connect:'.var_export($user_conn,true));
         };
 
 
@@ -102,7 +102,7 @@ class GateWork extends BaseWork
                 'gate_port'=>$conn->getLocalPort(),
             ];
             Client::publish('user_gate_close',$user_close);
-            StdLog::self()->info('publish user_gate_close:'.var_export($user_close));
+            StdLog::self()->info('publish user_gate_close:'.var_export($user_close,true));
         };
     }
 

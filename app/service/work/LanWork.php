@@ -22,7 +22,7 @@ class LanWork extends BaseWork
             Client::connect($this->register_lan_ip,$this->register_port);
 
             Client::on('user_gate_connect',function($eventData) use ($worker){
-                StdLog::self()->info('on user_gate_connect '.var_export($eventData));
+                StdLog::self()->info('on user_gate_connect '.var_export($eventData,true));
                 $config = $this->lan_map[$eventData['gate_port']];
                 $target = 'tcp://'.$config['lan_ip'].':'.$config['lan_port'];
 
@@ -38,7 +38,7 @@ class LanWork extends BaseWork
                     ];
 
                     Client::publish('lan_target_connect',$lan_conn);
-                    StdLog::self()->info('publish lan_target_connect '.var_export($lan_conn));
+                    StdLog::self()->info('publish lan_target_connect '.var_export($lan_conn,true));
                 };
 
                 $async->onMessage = function(AsyncTcpConnection $conn,$data) use ($eventData){
@@ -63,7 +63,7 @@ class LanWork extends BaseWork
                     ];
 
                     Client::publish('target_lan_close',$lan_close);
-                    StdLog::self()->info('publish target_lan_close:'.var_export($lan_close));
+                    StdLog::self()->info('publish target_lan_close:'.var_export($lan_close,true));
                 };
 
                 $async->connect();
@@ -86,10 +86,10 @@ class LanWork extends BaseWork
                         StdLog::self()->error('on user_gate_close fail,lan tcp has closed ');
                     }else{
                         $worker->connections[$eventData['id']]->close();
-                        StdLog::self()->info('on user_gate_close '.var_export($eventData));
+                        StdLog::self()->info('on user_gate_close '.var_export($eventData,true));
                     }
                 }catch (\Exception $e){
-                    StdLog::self()->error('on user_gate_close error '.var_export($e->getMessage()));
+                    StdLog::self()->error('on user_gate_close error '.var_export($e->getMessage(),true));
                 }
             });
 
