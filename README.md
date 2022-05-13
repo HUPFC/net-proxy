@@ -3,7 +3,7 @@
 ####项目介绍与使用
 1. 使用thinkphp6+workerman+workerman/channel实现端口映射，流量转发
 2. 配置文件 .env (.env.example为样例文件)
-3. php > 7.2 (其他环境要求参考workerman手册 https://www.workerman.net/doc/workerman/install/requirement.html)
+3. php >= 7.4 (其他环境要求参考workerman手册 https://www.workerman.net/doc/workerman/install/requirement.html)
 4. workman/channel组件因无密码校验，并且本项目未使用ssl，请勿直接在生产环境使用
 5. 服务端、客户端均支持windows、linux
 6. 服务端windows启动时，因windows安全限制，仅支持单接口监听（可使用.bat启动多个即可）
