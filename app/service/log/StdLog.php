@@ -45,7 +45,9 @@ class StdLog
             $id = $this->worker->id;
         }
         $time = date('Y-m-d H:i:s');
-        echo "[$time][$level][$name-$id] ".$string."\n";
+        if (app()->isDebug()){
+            echo "[$time][$level][$name-$id] ".$string."\n";
+        }
     }
 
     /**
