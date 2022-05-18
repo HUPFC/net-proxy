@@ -10,14 +10,12 @@ use Workerman\Worker;
 
 class Gate extends BaseWorkCommand
 {
+    protected string $name = 'net-proxy gate';
+    protected string $desc = 'the gate command';
     protected function execute(Input $input, Output $output)
     {
         parent::execute($input,$output);
-        Worker::$stdoutFile = $this->app->getRuntimePath().'work/gate.log';
-
         (new GateWork())->start();
-
-
         Worker::runAll();
     }
 }

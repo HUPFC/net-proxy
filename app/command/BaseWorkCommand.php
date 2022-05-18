@@ -1,11 +1,9 @@
 <?php
-declare (strict_types = 1);
+
 
 namespace app\command;
 
-use app\config\WorkConfig;
-use app\service\work\RegisterWork;
-use app\service\work\GateWork;
+
 use think\console\Command;
 use think\console\Input;
 use think\console\input\Argument;
@@ -15,19 +13,23 @@ use Workerman\Worker;
 
 class BaseWorkCommand extends Command
 {
+    protected string $name;
+    protected string $desc = 'the workerman command';
+
+
     protected function configure()
     {
         // 指令配置
-        $this->setName('convert')
+        $this->setName($this->name)
             ->addArgument('action', Argument::OPTIONAL, "start|stop|restart|reload|status|connections", 'start')
             ->addOption('mode', 'm', Option::VALUE_OPTIONAL, 'Run the workerman server in daemon mode.')
-            ->setDescription('the workerman command');
+            ->setDescription($this->desc);
     }
 
     protected function execute(Input $input, Output $output)
     {
         // 指令输出
-        $output->writeln('convert start');
+        $output->writeln($this->name.' start');
 
         $action = $input->getArgument('action');
         $mode = $input->getOption('mode');
@@ -45,8 +47,8 @@ class BaseWorkCommand extends Command
             $argv[] = '-g';
         }
 
-        // 在这里放心的实例化worker,
-        // 就像参照workerman文档写一样,
-        // 无非在workerman的文档里,代码是新建纯php文件,但在这里,写到了一个方法里.
+        Worker::$stdoutFile = $this->app->getRuntimePath().'/worker/'.$this->name.'.log';
+        Worker::$pidFile = $this->app->getRuntimePath().$this->name.'.pid';
+        Worker::$processTitle .= ' '.$this->name;
     }
 }

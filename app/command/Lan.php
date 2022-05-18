@@ -10,14 +10,14 @@ use Workerman\Worker;
 
 class Lan extends BaseWorkCommand
 {
-
+    protected string $name = 'net-proxy lan';
+    protected string $desc = 'the gate command';
     /**
      * @throws \Exception
      */
     protected function execute(Input $input, Output $output)
     {
         parent::execute($input,$output);
-        Worker::$stdoutFile = $this->app->getRuntimePath().'work/lan.log';
         (new LanWork())->start();
         Worker::runAll();
     }
